@@ -7,11 +7,20 @@ class CampersController < ApplicationController
 
     def show
         item = Camper.find(params[:id])
-        render json: item, status: :ok
+        render json: item, status: :ok, serializer: CamperWithActivitesSerializer
+    end
+
+    def create
+        camper = Camper.create!(camper_params)
+        render json: camper, status: :created
     end
 
 
     private
+
+    def camper_params
+        params.permit(:name, :age)
+    end
 
     def render_not_found_response
         render json: { error: "Camper not found" }, status: :not_found

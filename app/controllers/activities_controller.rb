@@ -5,6 +5,8 @@ class ActivitiesController < ApplicationController
         render json: Activity.all, status: :ok
     end
 
+    
+
     def destroy
         item = Activity.find(params[:id])
         item.destroy
