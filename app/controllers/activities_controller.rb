@@ -1,0 +1,23 @@
+class ActivitiesController < ApplicationController
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+
+    def index
+        render json: Activity.all, status: :ok
+    end
+
+    def destroy
+        item = Activity.find(params[:id])
+        item.destroy
+        head :no_content
+    end
+
+    private
+
+    def render_not_found_response
+        render json: { error: "Activity not found" }, status: :not_found
+    end
+
+    def accept_params
+        params.permit(:name, :difficulty, :id)
+    end
+end
